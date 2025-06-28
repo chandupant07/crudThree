@@ -10,6 +10,15 @@
 </head>
 
 <body>
+  @if($errors->any())
+    <div style="color:red;">
+    <ul>
+      @foreach($errors->all() as $error)
+      <li>{{ $error }}</li>
+    @endforeach
+    </ul>
+    </div>
+  @endif
   <div class="container">
     <h3>Add New Course</h3>
     <form action="{{ route('course.index') }}" method="POST" enctype="multipart/form-data">
@@ -17,7 +26,7 @@
       <div class="row p-3 shadow-lg p-3 mb-5 bg-body rounded">
         <div class="col-6">
           <label for="">Course Name</label>
-          <input type="text" class="form-control" name="courseName" />
+          <input type="text" class="form-control" name="name" />
         </div>
 
         <div class="col-6">
@@ -32,7 +41,7 @@
 
         <div class="col-6">
           <label for=""> Pic</label>
-          <input type="file" class="form-control" name="img" />
+          <input type="file" class="form-control" name="image" />
         </div>
 
         <button class="btn btn-success mt-3" type="submit">Save</button>

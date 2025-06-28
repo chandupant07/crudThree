@@ -22,12 +22,23 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'require',
-            'price' => 'require',
-            'instructor' => 'require',
-            'image' => 'require',
+            'name' => 'required',
+            'price' => 'required',
+            'instructor' => 'required',
+            'image' => 'required',
         ]);
 
-        Course::create();
+        $imgName = null;
+        if ($request->hasFile('image')) {
+            $imgName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imgName);
+        }
+        Course::create([
+            'name' => $request->name,
+            'price' => $request->price,
+            'instructor' => $request->instructor,
+            'image' => $imgName
+        ]);
+        return redirect()->route('layout.showcourse')->with('success', 'Data Save Successfully');
     }
 }
